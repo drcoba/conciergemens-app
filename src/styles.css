@@ -1,3 +1,8 @@
+:root {
+  /* Change this to your exact brand later */
+  --brand-teal: #0f766e;      /* main */
+  --brand-teal-hover: #0b5e58;/* hover */
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,7 +11,8 @@
 .container { @apply max-w-6xl mx-auto px-4; }
 .card { @apply bg-white border border-slate-200 rounded-2xl shadow-sm; }
 .btn { @apply inline-flex items-center justify-center px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50; }
-.btn-primary { @apply bg-teal-600 text-white border-teal-600 hover:bg-teal-700; }
+.btn-primary { background: var(--brand-teal); color:#fff; border-color: var(--brand-teal); }
+.btn-primary:hover { background: var(--brand-teal-hover); }
 .badge { @apply inline-flex items-center px-2 py-0.5 rounded-lg text-xs bg-slate-100 text-slate-700; }
 .input { @apply w-full border border-slate-300 rounded-xl px-3 py-2; }
 .text-muted { @apply text-slate-600; }
