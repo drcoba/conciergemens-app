@@ -27,12 +27,13 @@ export default function App(){
   if (window?.plausible) window.plausible(eventName);
 };
   const openCalendly = () => {
-    if (window?.Calendly?.initPopupWidget) {
-      window.Calendly.initPopupWidget({ url: 'https://calendly.com/jvcoba/new-meeting' })
-    } else {
-      window.open('https://calendly.com/jvcoba/new-meeting', '_blank')
-    }
+  track('Consultation Opened');
+  if (window?.Calendly?.initPopupWidget) {
+    window.Calendly.initPopupWidget({ url: 'https://calendly.com/jvcoba/new-meeting' });
+  } else {
+    window.open('https://calendly.com/jvcoba/new-meeting', '_blank');
   }
+};
 
   function runQuiz(){
     const age = parseInt(quiz.age || '0', 10)
