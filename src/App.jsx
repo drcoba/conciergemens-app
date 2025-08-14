@@ -18,7 +18,7 @@ import {
   CalendarDays, ClipboardList, Dumbbell, FlaskConical,
   MessageCircle, PhoneCall, Shield, Sparkles, User
 } from 'lucide-react'
-
+const STORAGE_KEY = 'cmw_quiz_v1';
 const features = [
   { icon: <ClipboardList className="w-6 h-6"/>, title: "2-Minute Intake Quiz", desc: "Answer 7 quick questions to get a personalized ED protocol suggestion." },
   { icon: <FlaskConical className="w-6 h-6"/>, title: "Treatment Explorer", desc: "Learn how troches, injections, and PT-141 work—timing, dose ranges, and expectations." },
