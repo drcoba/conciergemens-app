@@ -191,39 +191,146 @@ function runQuiz(){
       </section>
 
       {/* Quiz Modal (simple) */}
-      {quizOpen && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
-          <div className="card p-6 max-w-lg w-full">
-            <div className="font-semibold text-lg mb-3">Quick Intake</div>
-            <div className="grid gap-3">
-              <div className="grid grid-cols-2 gap-3">
-                <input className="input" placeholder="Age *" value={quiz.age} onChange={e=>setQuiz({...quiz, age:e.target.value})}/>
-                <input className="input" placeholder="Main goal (e.g., firmness, duration) *" value={quiz.goals} onChange={e=>setQuiz({...quiz, goals:e.target.value})}/>
-              </div>
-              <input className="input" placeholder="Relevant condition (optional)" value={quiz.condition} onChange={e=>setQuiz({...quiz, condition:e.target.value})}/>
-              <input className="input" placeholder="Current meds (optional)" value={quiz.meds} onChange={e=>setQuiz({...quiz, meds:e.target.value})}/>
-              <input className="input" placeholder="Email (for results) — optional" value={quiz.contact} onChange={e=>setQuiz({...quiz, contact:e.target.value})}/>
-              <div className="flex gap-2">
-                <button className="btn btn-primary" onClick={runQuiz}><Sparkles className="w-4 h-4 mr-2"/>Get Suggestion</button>
-                <button className="btn" onClick={openCalendly}><PhoneCall className="w-4 h-4 mr-2"/>Book Consult</button>
-                <button className="ml-auto btn" onClick={()=>setQuizOpen(false)}>Close</button>
-              </div>
-              {result && (
-  <div className="border rounded-xl p-3 text-sm text-slate-700">
-    <div>{result}</div>
-    <div className="mt-3 flex gap-2">
-      <button
-        className="btn btn-primary"
-        onClick={() => {
-          if (typeof track === 'function') track('Email CTA Clicked');
-          window.open(BREVO_FORM_URL, '_blank');
-        }}
-      >
-        Get guidance by email
-      </button>
-      <button className="btn" onClick={openCalendly}>
-        <PhoneCall className="w-4 h-4 mr-2" /> Book Consult
-      </button>
+     {quizOpen && (
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
+    <div
+      className="card p-6 max-w-lg w-full"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="quiz-title"
+      aria-describedby="quiz-desc"
+    >
+      <div id="quiz-title" className="font-semibold text-lg mb-1">Quick Intake</div>
+      <p id="quiz-desc" className="text-sm text-slate-600 mb-3">
+        Answer 2 required fields (*) to get a preliminary suggestion. This is for education only; not medical advice.
+      </p>
+
+      <div className="grid gap-3">
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label htmlFor="age" className="block text-xs text-slate-600 mb-1">Age *</label>
+            <input
+              id="age"
+              type="number"
+              inputMode="numeric"
+              min="18"
+              max="100"
+              className="input"
+              placeholder="e.g., 45"
+              value={quiz.age}
+              onChange={e=>setQuiz({...quiz, age:e.target.value})}
+              autoComplete="off"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="goals" className="block text-xs text-slate-600 mb-1">Main goal *</label>
+            <input
+              id="goals"
+              className="input"
+              placeholder="e.g., firmness, duration"
+              value={quiz.goals}
+              onChange={e=>setQuiz({...quiz, goals:e.target.value})}
+              autoComplete="off"
+              required
+            />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="condition" className="block text-xs text-slate-600 mb-1">Relevant condition (optional)</label>
+          <input
+            id="condition"
+            className="input"
+            placeholder="e.g., diabetes, post-prostatectomy"
+            value={quiz.condition}
+            onChange={e=>setQuiz({...quiz, condition:e.target.value})}
+            autoComplete="off"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="meds" className="block text-xs text-slate-600 mb-1">Current meds (optional)</label>
+          <input
+            id="meds"
+            className="input"
+            placeholder="e.g., nitrates"
+            value={quiz.meds}
+            onChange={e=>setQuiz({...quiz, meds:e.target.value})}
+            autoComplete="off"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email" className="block text-xs text-slate-600 mb-1">Email (for results, optional)</label>
+          <input
+            id="email"
+            type="email"
+            className="input"
+            placeholder="you@example.com"
+            value={quiz.contact}
+            onChange={e=>setQuiz({...quiz, contact:e.target.value})}
+            autoComplete="email"
+          />
+        </div>
+
+        <div className="flex gap-2">
+          <button className="btn btn-primary" onClick={runQuiz}>
+            <Sparkles className="w-4 h-4 mr-2"/> Get Suggestion
+          </button>
+          <button className="btn" onClick={openCalendly}>
+            <PhoneCall className="w-4 h-4 mr-2"/> Book Consult
+          </button>
+          <button
+            className="ml-auto btn"
+            onClick={() => {
+              setQuizOpen(false);
+            }}
+          >
+            Close
+          </button>
+          <button
+            className="btn"
+            onClick={() => {
+              setQuiz({ age:'', condition:'', meds:'', goals:'', contact:'' });
+              try { localStorage.removeItem('cmw_quiz_v1'); } catch {}
+              if (typeof track === 'function') track('Quiz Cleared');
+            }}
+          >
+            Clear answers
+          </button>
+        </div>
+
+        {/* Live region: announces result to screen readers */}
+        {result && (
+          <div
+            className="border rounded-xl p-3 text-sm text-slate-700"
+            role="status"
+            aria-live="polite"
+          >
+            <div className="font-medium mb-2">Preliminary suggestion</div>
+            <div>{result}</div>
+            <div className="mt-3 flex gap-2">
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  if (typeof track === 'function') track('Email CTA Clicked');
+                  window.open(BREVO_FORM_URL, '_blank');
+                }}
+              >
+                Get guidance by email
+              </button>
+              <button className="btn" onClick={openCalendly}>
+                <PhoneCall className="w-4 h-4 mr-2" /> Book Consult
+              </button>
+            </div>
+            <p className="mt-3 text-xs text-slate-500">
+              Educational content only and not a substitute for professional medical advice, diagnosis, or treatment.
+              If you think you’re experiencing a medical emergency, call your local emergency number.
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   </div>
 )}
