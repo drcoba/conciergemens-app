@@ -123,7 +123,9 @@ const openCalendly = () => {
               <input className="input" placeholder="Email (for results) — optional" value={quiz.contact} onChange={e=>setQuiz({...quiz, contact:e.target.value})}/>
               <div className="flex gap-2">
                 <button className="btn btn-primary" onClick={runQuiz}><Sparkles className="w-4 h-4 mr-2"/>Get Suggestion</button>
-                <a className="btn" href="https://calendly.com/jvcoba/new-meeting" target="_blank" rel="noreferrer"><PhoneCall className="w-4 h-4 mr-2"/>Book Consult</a>
+                <button className="btn" onClick={openCalendly}>
+  <PhoneCall className="w-4 h-4 mr-2" /> Book Consult
+</button>
                 <button className="ml-auto btn" onClick={()=>setQuizOpen(false)}>Close</button>
               </div>
               {result && <div className="border rounded-xl p-3 text-sm text-slate-700">{result}</div>}
