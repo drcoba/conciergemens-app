@@ -36,7 +36,7 @@ export default function App(){
   const [quizOpen, setQuizOpen] = useState(false)
   const [quiz, setQuiz] = useState({ age:'', condition:'', meds:'', goals:'', contact:'' })
   const [result, setResult] = useState(null)
-
+const BREVO_FORM_URL = 'https://76a5ed9f.sibforms.com/serve/MUIFAJWroWsyQSm_vx3hEhRaD1X7l5IE7J9SQ2Q4qvjcosX4xFgjshpQkYBgAsty_bdeSd2LWF9d8hek9ScPncFoyb0G1w71ufhDPeO7u8gko6Ja_uHteFA7hI0IClAS0wwqb0Fe0jAKbblUN18ieby6LxJsxayhiQBVzJi79p_2ASgJl75D6-qDUB9ccpgda4ENlWAqP0yeLLD_';
   // Calendly popup (kept OUTSIDE runQuiz)
   const track = (eventName) => {
   if (window?.plausible) window.plausible(eventName);
@@ -53,34 +53,41 @@ export default function App(){
   }
 };
 
-  function runQuiz(){
+function runQuiz(){
+  // normalize age
   const age = parseInt(quiz.age || '0', 10);
 
-  // Incomplete: missing required answers
+  // 1) Incomplete: required fields missing
   if (!age || !quiz.goals){
     setResult("Please answer the required questions.");
-    trackQuiz('incomplete');         // send event to Plausible
-    return;
+    // analytics
+    if (typeof trackQuiz === 'function') trackQuiz('incomplete');
+    return; // stop here; do not open Brevo
   }
 
-  // Flagged: contraindication / complex history
+  // 2) Contraindication / complex history (flagged)
   const hasFlag =
     (quiz.condition || '').toLowerCase().includes('post-prostatectomy') ||
     (quiz.meds || '').toLowerCase().includes('nitrate');
 
   if (hasFlag){
     setResult("Flagged for clinician review only (contraindication/complex history). Book a free consult.");
-    trackQuiz('flagged');            // send event to Plausible
-    return;
+    // analytics
+    if (typeof trackQuiz === 'function') trackQuiz('flagged');
+    return; // stop here; do not open Brevo
   }
 
-  // Younger vs Older suggestion
+  // 3) Valid suggestion branches (open Brevo in a new tab)
   if (age < 45){
     setResult("Consider fast-acting troches + lifestyle tune-up. Discuss PT-141 if psychological component suspected.");
-    trackQuiz('younger');            // send event to Plausible
+    if (typeof trackQuiz === 'function') trackQuiz('younger');
+    // open Brevo hosted form (non-PHI capture)
+    window.open(BREVO_FORM_URL, '_blank');
   } else {
     setResult("Start with low-dose intracavernosal protocol + optional PT-141. Titrate under clinician supervision.");
-    trackQuiz('older');              // send event to Plausible
+    if (typeof trackQuiz === 'function') trackQuiz('older');
+    // open Brevo hosted form (non-PHI capture)
+    window.open(BREVO_FORM_URL, '_blank');
   }
 }
 
