@@ -54,7 +54,7 @@ export default function App(){
       <div className="sticky top-0 z-40 bg-white/70 backdrop-blur border-b">
         <div className="container py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-teal-600 text-white font-bold">CM</span>
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-[var(--brand-teal)] text-white font-bold">CM</span>
             <div className="leading-tight">
               <div className="font-semibold">Concierge Men's Wellness</div>
               <div className="text-xs text-slate-500">conciergemens.com</div>
@@ -76,7 +76,7 @@ export default function App(){
       <section className="container pt-10 pb-8">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Stronger, Longer, <span className="text-teal-700">Confident</span>.</h1>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Stronger, Longer, <span className="text-[var(--brand-teal)]">Confident</span>.</h1>
             <p className="mt-3 text-slate-600">Evidence-based, prescription-only solutions for ED and performance. Private, fast, and tailored to your goals.</p>
             <div className="mt-5 flex gap-3 flex-wrap">
               <button className="btn btn-primary" onClick={()=>setQuizOpen(true)}>
