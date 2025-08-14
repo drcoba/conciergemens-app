@@ -54,19 +54,14 @@ const BREVO_FORM_URL = 'https://76a5ed9f.sibforms.com/serve/MUIFAJWroWsyQSm_vx3h
 };
 
 function runQuiz(){
-  // Debug: confirm the click is firing and we have data
-  alert(`Running quiz...\nAge: ${quiz.age}\nGoal: ${quiz.goals}`);
-
   const age = parseInt(quiz.age || '0', 10);
 
-  // 1) Incomplete: required fields missing
   if (!age || !quiz.goals){
     setResult("Please answer the required questions.");
     if (typeof trackQuiz === 'function') trackQuiz('incomplete');
-    return; // stop here; do not open Brevo
+    return;
   }
 
-  // 2) Contraindication / complex history (flagged)
   const hasFlag =
     (quiz.condition || '').toLowerCase().includes('post-prostatectomy') ||
     (quiz.meds || '').toLowerCase().includes('nitrate');
@@ -74,18 +69,17 @@ function runQuiz(){
   if (hasFlag){
     setResult("Flagged for clinician review only (contraindication/complex history). Book a free consult.");
     if (typeof trackQuiz === 'function') trackQuiz('flagged');
-    return; // stop here; do not open Brevo
+    return;
   }
 
-  // 3) Valid suggestion branches (open Brevo in a new tab)
   if (age < 45){
     setResult("Consider fast-acting troches + lifestyle tune-up. Discuss PT-141 if psychological component suspected.");
     if (typeof trackQuiz === 'function') trackQuiz('younger');
-    window.open(BREVO_FORM_URL, '_blank');   // Brevo hosted form
+    window.open(BREVO_FORM_URL, '_blank');
   } else {
     setResult("Start with low-dose intracavernosal protocol + optional PT-141. Titrate under clinician supervision.");
     if (typeof trackQuiz === 'function') trackQuiz('older');
-    window.open(BREVO_FORM_URL, '_blank');   // Brevo hosted form
+    window.open(BREVO_FORM_URL, '_blank');
   }
 }
 
