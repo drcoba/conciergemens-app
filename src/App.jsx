@@ -52,6 +52,36 @@ const BREVO_FORM_URL = 'https://76a5ed9f.sibforms.com/serve/MUIFAJWroWsyQSm_vx3h
     window.open('https://calendly.com/jvcoba/new-meeting', '_blank');
   }
 };
+import React, { useState, useEffect } from 'react';
+
+export default function App() {
+  // state first
+  const [quizOpen, setQuizOpen] = useState(false);
+  const [quiz, setQuiz] = useState({ age:'', condition:'', meds:'', goals:'', contact:'' });
+  const [result, setResult] = useState(null);
+
+  // storage key
+  const STORAGE_KEY = 'cmw_quiz_v1';
+
+  // 3) LOAD saved values on mount — PLACE THIS HERE
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+      if (saved && typeof saved === 'object') {
+        setQuiz(q => ({ ...q, ...saved }));
+      }
+    } catch {}
+  }, []);
+
+  // (optional next) SAVE on change — can go right below
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(quiz));
+    } catch {}
+  }, [quiz]);
+
+  // ...your tracking helpers, Calendly useEffect, openCalendly(), runQuiz(), and return(...)
+}
 
 function runQuiz(){
   const age = parseInt(quiz.age || '0', 10);
