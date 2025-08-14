@@ -26,6 +26,9 @@ export default function App(){
   const track = (eventName) => {
   if (window?.plausible) window.plausible(eventName);
 };
+  const trackQuiz = (type) => {
+  if (window?.plausible) window.plausible('Quiz Result', { props: { type } });
+};
   const openCalendly = () => {
   track('Consultation Opened');
   if (window?.Calendly?.initPopupWidget) {
