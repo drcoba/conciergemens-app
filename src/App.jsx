@@ -50,7 +50,7 @@ export default function App(){
             <button className="btn" onClick={()=>alert('We combine fast-acting options (troches, ICI) with neuro‑hormonal support (PT‑141, oxytocin). Protocols are individualized and supervised by clinicians.')}>
               <Shield className="w-4 h-4 mr-2"/>Why It Works
             </button>
-            <a href="https://conciergemens.com/#contact" target="_blank" rel="noreferrer" className="btn btn-primary">
+            <a href="https://calendly.com/jvcoba/new-meeting" target="_blank" rel="noreferrer" className="btn btn-primary">
               <PhoneCall className="w-4 h-4 mr-2"/> Free Consultation
             </a>
           </div>
@@ -65,7 +65,7 @@ export default function App(){
             <p className="mt-3 text-slate-600">Evidence‑based, prescription‑only solutions for ED and performance. Private, fast, and tailored to your goals.</p>
             <div className="mt-5 flex gap-3 flex-wrap">
               <button className="btn btn-primary" onClick={()=>setQuizOpen(true)}><ClipboardList className="w-4 h-4 mr-2"/> 2‑Minute Intake Quiz</button>
-              <a href="https://conciergemens.com/#contact" target="_blank" rel="noreferrer" className="btn"><PhoneCall className="w-4 h-4 mr-2"/> Free Consultation</a>
+              <a href="https://calendly.com/jvcoba/new-meeting" target="_blank" rel="noreferrer" className="btn"><PhoneCall className="w-4 h-4 mr-2"/> Free Consultation</a>
             </div>
           </div>
           <div className="card p-6">
@@ -110,7 +110,7 @@ export default function App(){
               <input className="input" placeholder="Email (for results) — optional" value={quiz.contact} onChange={e=>setQuiz({...quiz, contact:e.target.value})}/>
               <div className="flex gap-2">
                 <button className="btn btn-primary" onClick={runQuiz}><Sparkles className="w-4 h-4 mr-2"/>Get Suggestion</button>
-                <a className="btn" href="https://conciergemens.com/#contact" target="_blank" rel="noreferrer"><PhoneCall className="w-4 h-4 mr-2"/>Book Consult</a>
+                <a className="btn" href="https://calendly.com/jvcoba/new-meeting" target="_blank" rel="noreferrer"><PhoneCall className="w-4 h-4 mr-2"/>Book Consult</a>
                 <button className="ml-auto btn" onClick={()=>setQuizOpen(false)}>Close</button>
               </div>
               {result && <div className="border rounded-xl p-3 text-sm text-slate-700">{result}</div>}
