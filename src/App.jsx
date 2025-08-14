@@ -39,11 +39,36 @@ export default function App(){
 };
 
   function runQuiz(){
-    const age = parseInt(quiz.age || '0', 10)
-    if (!age || !quiz.goals){
-      setResult("Please answer the required questions.")
-      return
-    }
+  const age = parseInt(quiz.age || '0', 10);
+
+  // Incomplete: missing required answers
+  if (!age || !quiz.goals){
+    setResult("Please answer the required questions.");
+    trackQuiz('incomplete');         // send event to Plausible
+    return;
+  }
+
+  // Flagged: contraindication / complex history
+  const hasFlag =
+    (quiz.condition || '').toLowerCase().includes('post-prostatectomy') ||
+    (quiz.meds || '').toLowerCase().includes('nitrate');
+
+  if (hasFlag){
+    setResult("Flagged for clinician review only (contraindication/complex history). Book a free consult.");
+    trackQuiz('flagged');            // send event to Plausible
+    return;
+  }
+
+  // Younger vs Older suggestion
+  if (age < 45){
+    setResult("Consider fast-acting troches + lifestyle tune-up. Discuss PT-141 if psychological component suspected.");
+    trackQuiz('younger');            // send event to Plausible
+  } else {
+    setResult("Start with low-dose intracavernosal protocol + optional PT-141. Titrate under clinician supervision.");
+    trackQuiz('older');              // send event to Plausible
+  }
+}
+
     if ((quiz.condition || '').toLowerCase().includes('post-prostatectomy')
         || (quiz.meds || '').toLowerCase().includes('nitrate')){
       setResult("Flagged for clinician review only (contraindication/complex history). Book a free consult.")
