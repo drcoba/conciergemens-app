@@ -178,7 +178,26 @@ function runQuiz(){
                 <button className="btn" onClick={openCalendly}><PhoneCall className="w-4 h-4 mr-2"/>Book Consult</button>
                 <button className="ml-auto btn" onClick={()=>setQuizOpen(false)}>Close</button>
               </div>
-              {result && <div className="border rounded-xl p-3 text-sm text-slate-700">{result}</div>}
+              {result && (
+  <div className="border rounded-xl p-3 text-sm text-slate-700">
+    <div>{result}</div>
+    <div className="mt-3 flex gap-2">
+      <button
+        className="btn btn-primary"
+        onClick={() => {
+          if (typeof track === 'function') track('Email CTA Clicked');
+          window.open(BREVO_FORM_URL, '_blank');
+        }}
+      >
+        Get guidance by email
+      </button>
+      <button className="btn" onClick={openCalendly}>
+        <PhoneCall className="w-4 h-4 mr-2" /> Book Consult
+      </button>
+    </div>
+  </div>
+)}
+
               <p className="text-xs text-slate-500">By continuing you agree this is educational content, not medical advice.</p>
             </div>
           </div>
