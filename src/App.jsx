@@ -76,7 +76,9 @@ const openCalendly = () => {
             <p className="mt-3 text-slate-600">Evidence‑based, prescription‑only solutions for ED and performance. Private, fast, and tailored to your goals.</p>
             <div className="mt-5 flex gap-3 flex-wrap">
               <button className="btn btn-primary" onClick={()=>setQuizOpen(true)}><ClipboardList className="w-4 h-4 mr-2"/> 2‑Minute Intake Quiz</button>
-              <a href="https://calendly.com/jvcoba/new-meeting" target="_blank" rel="noreferrer" className="btn"><PhoneCall className="w-4 h-4 mr-2"/> Free Consultation</a>
+              <button onClick={openCalendly} className="btn">
+  <PhoneCall className="w-4 h-4 mr-2" /> Free Consultation
+</button>
             </div>
           </div>
           <div className="card p-6">
