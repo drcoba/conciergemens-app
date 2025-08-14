@@ -23,6 +23,9 @@ export default function App(){
   const [result, setResult] = useState(null)
 
   // Calendly popup (kept OUTSIDE runQuiz)
+  const track = (eventName) => {
+  if (window?.plausible) window.plausible(eventName);
+};
   const openCalendly = () => {
     if (window?.Calendly?.initPopupWidget) {
       window.Calendly.initPopupWidget({ url: 'https://calendly.com/jvcoba/new-meeting' })
