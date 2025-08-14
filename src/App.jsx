@@ -1,4 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+useEffect(() => {
+  const onCalendly = (e) => {
+    // Calendly posts messages from calendly.com; event name is calendly.event_scheduled
+    if (
+      e?.origin?.includes('calendly.com') &&
+      typeof e.data === 'object' &&
+      e.data?.event === 'calendly.event_scheduled'
+    ) {
+      if (window?.plausible) window.plausible('Consultation Booked');
+    }
+  };
+  window.addEventListener('message', onCalendly);
+  return () => window.removeEventListener('message', onCalendly);
+}, []);
+
 import {
   CalendarDays, ClipboardList, Dumbbell, FlaskConical,
   MessageCircle, PhoneCall, Shield, Sparkles, User
