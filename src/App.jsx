@@ -340,6 +340,31 @@ function runQuiz(){
           </div>
         </div>
       )}
+{/* Mobile sticky bar */}
+<div className="fixed bottom-0 left-0 right-0 z-50 md:hidden" role="region" aria-label="Quick actions">
+  <div className="mx-auto max-w-6xl px-4 pb-4">
+    <div className="rounded-2xl shadow-lg border bg-white p-3 flex gap-2">
+      <button
+        className="btn btn-primary flex-1"
+        onClick={() => {
+          setQuizOpen(true);
+          if (typeof track === 'function') track('Start Quiz (sticky)');
+        }}
+      >
+        <ClipboardList className="w-4 h-4 mr-2" /> Start Quiz
+      </button>
+      <button
+        className="btn flex-1"
+        onClick={() => {
+          if (typeof track === 'function') track('Consultation Opened (sticky)');
+          openCalendly();
+        }}
+      >
+        <PhoneCall className="w-4 h-4 mr-2" /> Book Consult
+      </button>
+    </div>
+  </div>
+</div>
 
       {/* Footer */}
       <footer className="border-t">
