@@ -125,7 +125,7 @@ function runQuiz(){
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-900">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-900 pb-24 md:pb-0">
       {/* Top Bar */}
       <div className="sticky top-0 z-40 bg-white/70 backdrop-blur border-b">
         <div className="container py-3 flex items-center justify-between">
