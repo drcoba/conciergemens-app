@@ -15,22 +15,39 @@ const FAQ = [
 ]
 
 export default function App(){
-  const [quizOpen, setQuizOpen] = useState(false)
-  const [quiz, setQuiz] = useState({ age:'', condition:'', meds:'', goals:'', contact:'' })
-  const [result, setResult] = useState(null)
+  const [quizOpen, setQuizOpen] = useState(false);
+  const [quiz, setQuiz] = useState({ age:'', condition:'', meds:'', goals:'', contact:'' });
+  const [result, setResult] = useState(null);
+
+  // Calendly popup helper (must be OUTSIDE runQuiz)
+  const openCalendly = () => {
+    if (window?.Calendly?.initPopupWidget) {
+      window.Calendly.initPopupWidget({ url: 'https://calendly.com/jvcoba/new-meeting' });
+    } else {
+      // Fallback if script hasn't loaded
+      window.open('https://calendly.com/jvcoba/new-meeting', '_blank');
+    }
+  };
 
   function runQuiz(){
-    const age = parseInt(quiz.age || '0', 10)
+    const age = parseInt(quiz.age || '0', 10);
     if (!age || !quiz.goals){
-      setResult("Please answer the required questions.")
-const openCalendly = () => {
-  if (window?.Calendly?.initPopupWidget) {
-    window.Calendly.initPopupWidget({ url: 'https://calendly.com/jvcoba/new-meeting' });
-  } else {
-    // Fallback if script hasn't loaded
-    window.open('https://calendly.com/jvcoba/new-meeting', '_blank');
+      setResult("Please answer the required questions.");
+      return;
+    }
+    if ((quiz.condition || '').toLowerCase().includes('post-prostatectomy') ||
+        (quiz.meds || '').toLowerCase().includes('nitrate')){
+      setResult("Flagged for clinician review only (contraindication/complex history). Book a free consult.");
+      return;
+    }
+    if (age < 45)
+      setResult("Consider fast-acting troches + lifestyle tune-up. Discuss PT-141 if psychological component suspected.");
+    else
+      setResult("Start with low-dose intracavernosal protocol + optional PT-141. Titrate under clinician supervision.");
   }
-};
+
+  return (
+
       return
     }
     if ((quiz.condition||'').toLowerCase().includes('post-prostatectomy') || (quiz.meds||'').toLowerCase().includes('nitrate')){
