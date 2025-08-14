@@ -23,6 +23,14 @@ export default function App(){
     const age = parseInt(quiz.age || '0', 10)
     if (!age || !quiz.goals){
       setResult("Please answer the required questions.")
+const openCalendly = () => {
+  if (window?.Calendly?.initPopupWidget) {
+    window.Calendly.initPopupWidget({ url: 'https://calendly.com/jvcoba/new-meeting' });
+  } else {
+    // Fallback if script hasn't loaded
+    window.open('https://calendly.com/jvcoba/new-meeting', '_blank');
+  }
+};
       return
     }
     if ((quiz.condition||'').toLowerCase().includes('post-prostatectomy') || (quiz.meds||'').toLowerCase().includes('nitrate')){
@@ -51,7 +59,10 @@ export default function App(){
               <Shield className="w-4 h-4 mr-2"/>Why It Works
             </button>
             <a href="https://calendly.com/jvcoba/new-meeting" target="_blank" rel="noreferrer" className="btn btn-primary">
-              <PhoneCall className="w-4 h-4 mr-2"/> Free Consultation
+              <PhoneCall className="w-4 h-4 mr-2"/> <button onClick={openCalendly} className="btn btn-primary">
+  <PhoneCall className="w-4 h-4 mr-2" /> Free Consultation
+</button>
+
             </a>
           </div>
         </div>
