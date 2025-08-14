@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import { CalendarDays, ClipboardList, Dumbbell, FlaskConical, MessageCircle, PhoneCall, Shield, Sparkles, User } from 'lucide-react'
+import {
+  CalendarDays, ClipboardList, Dumbbell, FlaskConical,
+  MessageCircle, PhoneCall, Shield, Sparkles, User
+} from 'lucide-react'
 
 const features = [
-  { icon: <ClipboardList className="w-6 h-6"/>, title: "2‑Minute Intake Quiz", desc: "Answer 7 quick questions to get a personalized ED protocol suggestion." },
-  { icon: <FlaskConical className="w-6 h-6"/>, title: "Treatment Explorer", desc: "Learn how troches, injections, and PT‑141 work—timing, dose ranges, and expectations." },
-  { icon: <CalendarDays className="w-6 h-6"/>, title: "Book a Free Consult", desc: "Schedule a virtual or in‑clinic visit at a time that works for you." },
-  { icon: <Dumbbell className="w-6 h-6"/>, title: "Protocol Tracker", desc: "Track usage, effects, and side‑effects. Export a summary for your clinician." },
+  { icon: <ClipboardList className="w-6 h-6"/>, title: "2-Minute Intake Quiz", desc: "Answer 7 quick questions to get a personalized ED protocol suggestion." },
+  { icon: <FlaskConical className="w-6 h-6"/>, title: "Treatment Explorer", desc: "Learn how troches, injections, and PT-141 work—timing, dose ranges, and expectations." },
+  { icon: <CalendarDays className="w-6 h-6"/>, title: "Book a Free Consult", desc: "Schedule a virtual or in-clinic visit at a time that works for you." },
+  { icon: <Dumbbell className="w-6 h-6"/>, title: "Protocol Tracker", desc: "Track usage, effects, and side-effects. Export a summary for your clinician." },
 ]
 
 const FAQ = [
@@ -15,47 +18,34 @@ const FAQ = [
 ]
 
 export default function App(){
-  const [quizOpen, setQuizOpen] = useState(false);
-  const [quiz, setQuiz] = useState({ age:'', condition:'', meds:'', goals:'', contact:'' });
-  const [result, setResult] = useState(null);
+  const [quizOpen, setQuizOpen] = useState(false)
+  const [quiz, setQuiz] = useState({ age:'', condition:'', meds:'', goals:'', contact:'' })
+  const [result, setResult] = useState(null)
 
-  // Calendly popup helper (must be OUTSIDE runQuiz)
+  // Calendly popup (kept OUTSIDE runQuiz)
   const openCalendly = () => {
     if (window?.Calendly?.initPopupWidget) {
-      window.Calendly.initPopupWidget({ url: 'https://calendly.com/jvcoba/new-meeting' });
+      window.Calendly.initPopupWidget({ url: 'https://calendly.com/jvcoba/new-meeting' })
     } else {
-      // Fallback if script hasn't loaded
-      window.open('https://calendly.com/jvcoba/new-meeting', '_blank');
+      window.open('https://calendly.com/jvcoba/new-meeting', '_blank')
     }
-  };
-
-  function runQuiz(){
-    const age = parseInt(quiz.age || '0', 10);
-    if (!age || !quiz.goals){
-      setResult("Please answer the required questions.");
-      return;
-    }
-    if ((quiz.condition || '').toLowerCase().includes('post-prostatectomy') ||
-        (quiz.meds || '').toLowerCase().includes('nitrate')){
-      setResult("Flagged for clinician review only (contraindication/complex history). Book a free consult.");
-      return;
-    }
-    if (age < 45)
-      setResult("Consider fast-acting troches + lifestyle tune-up. Discuss PT-141 if psychological component suspected.");
-    else
-      setResult("Start with low-dose intracavernosal protocol + optional PT-141. Titrate under clinician supervision.");
   }
 
-  return (
-
+  function runQuiz(){
+    const age = parseInt(quiz.age || '0', 10)
+    if (!age || !quiz.goals){
+      setResult("Please answer the required questions.")
       return
     }
-    if ((quiz.condition||'').toLowerCase().includes('post-prostatectomy') || (quiz.meds||'').toLowerCase().includes('nitrate')){
+    if ((quiz.condition || '').toLowerCase().includes('post-prostatectomy')
+        || (quiz.meds || '').toLowerCase().includes('nitrate')){
       setResult("Flagged for clinician review only (contraindication/complex history). Book a free consult.")
       return
     }
-    if (age < 45) setResult("Consider fast-acting troches + lifestyle tune-up. Discuss PT‑141 if psychological component suspected.")
-    else setResult("Start with low-dose intracavernosal protocol + optional PT‑141. Titrate under clinician supervision.")
+    if (age < 45)
+      setResult("Consider fast-acting troches + lifestyle tune-up. Discuss PT-141 if psychological component suspected.")
+    else
+      setResult("Start with low-dose intracavernosal protocol + optional PT-141. Titrate under clinician supervision.")
   }
 
   return (
@@ -72,15 +62,12 @@ export default function App(){
             <span className="badge ml-2">MVP</span>
           </div>
           <div className="hidden md:flex items-center gap-2">
-            <button className="btn" onClick={()=>alert('We combine fast-acting options (troches, ICI) with neuro‑hormonal support (PT‑141, oxytocin). Protocols are individualized and supervised by clinicians.')}>
-              <Shield className="w-4 h-4 mr-2"/>Why It Works
+            <button className="btn" onClick={()=>alert('We combine fast-acting options (troches, ICI) with neuro-hormonal support (PT-141, oxytocin). Protocols are individualized and supervised by clinicians.')}>
+              <Shield className="w-4 h-4 mr-2"/> Why It Works
             </button>
-            <a href="https://calendly.com/jvcoba/new-meeting" target="_blank" rel="noreferrer" className="btn btn-primary">
-              <PhoneCall className="w-4 h-4 mr-2"/> <button onClick={openCalendly} className="btn btn-primary">
-  <PhoneCall className="w-4 h-4 mr-2" /> Free Consultation
-</button>
-
-            </a>
+            <button onClick={openCalendly} className="btn btn-primary">
+              <PhoneCall className="w-4 h-4 mr-2" /> Free Consultation
+            </button>
           </div>
         </div>
       </div>
@@ -90,12 +77,14 @@ export default function App(){
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Stronger, Longer, <span className="text-teal-700">Confident</span>.</h1>
-            <p className="mt-3 text-slate-600">Evidence‑based, prescription‑only solutions for ED and performance. Private, fast, and tailored to your goals.</p>
+            <p className="mt-3 text-slate-600">Evidence-based, prescription-only solutions for ED and performance. Private, fast, and tailored to your goals.</p>
             <div className="mt-5 flex gap-3 flex-wrap">
-              <button className="btn btn-primary" onClick={()=>setQuizOpen(true)}><ClipboardList className="w-4 h-4 mr-2"/> 2‑Minute Intake Quiz</button>
+              <button className="btn btn-primary" onClick={()=>setQuizOpen(true)}>
+                <ClipboardList className="w-4 h-4 mr-2"/> 2-Minute Intake Quiz
+              </button>
               <button onClick={openCalendly} className="btn">
-  <PhoneCall className="w-4 h-4 mr-2" /> Free Consultation
-</button>
+                <PhoneCall className="w-4 h-4 mr-2" /> Free Consultation
+              </button>
             </div>
           </div>
           <div className="card p-6">
@@ -103,8 +92,8 @@ export default function App(){
               <div className="font-semibold">Treatments</div>
               <ul className="space-y-3 text-sm">
                 <li className="p-3 rounded-xl border flex items-start gap-3"><FlaskConical className="w-5 h-5 mt-0.5"/> Troches & rapid-dissolve tablets: on-demand support with fast onset.</li>
-                <li className="p-3 rounded-xl border flex items-start gap-3"><Sparkles className="w-5 h-5 mt-0.5"/> Intracavernosal injections: 10‑minute onset, long duration, effective even post‑prostatectomy or diabetes.</li>
-                <li className="p-3 rounded-xl border flex items-start gap-3"><Sparkles className="w-5 h-5 mt-0.5"/> PT‑141 (Bremelanotide): boosts desire and neural pathways of arousal.</li>
+                <li className="p-3 rounded-xl border flex items-start gap-3"><Sparkles className="w-5 h-5 mt-0.5"/> Intracavernosal injections: 10-minute onset, long duration, effective even post-prostatectomy or diabetes.</li>
+                <li className="p-3 rounded-xl border flex items-start gap-3"><Sparkles className="w-5 h-5 mt-0.5"/> PT-141 (Bremelanotide): boosts desire and neural pathways of arousal.</li>
                 <li className="p-3 rounded-xl border flex items-start gap-3"><Sparkles className="w-5 h-5 mt-0.5"/> Oxytocin: confidence, bonding, and partner connection support.</li>
               </ul>
             </div>
@@ -140,9 +129,7 @@ export default function App(){
               <input className="input" placeholder="Email (for results) — optional" value={quiz.contact} onChange={e=>setQuiz({...quiz, contact:e.target.value})}/>
               <div className="flex gap-2">
                 <button className="btn btn-primary" onClick={runQuiz}><Sparkles className="w-4 h-4 mr-2"/>Get Suggestion</button>
-                <button className="btn" onClick={openCalendly}>
-  <PhoneCall className="w-4 h-4 mr-2" /> Book Consult
-</button>
+                <button className="btn" onClick={openCalendly}><PhoneCall className="w-4 h-4 mr-2"/>Book Consult</button>
                 <button className="ml-auto btn" onClick={()=>setQuizOpen(false)}>Close</button>
               </div>
               {result && <div className="border rounded-xl p-3 text-sm text-slate-700">{result}</div>}
@@ -157,23 +144,24 @@ export default function App(){
         <div className="container py-10 text-sm text-slate-600 grid md:grid-cols-3 gap-6">
           <div>
             <div className="font-semibold">Concierge Men's Wellness</div>
-            <div>Evidence‑based sexual wellness care for men.</div>
-            <div className="mt-2">(954) 323‑8684 • Fort Lauderdale, FL</div>
+            <div>Evidence-based sexual wellness care for men.</div>
+            <div className="mt-2">(954) 323-8684 • Fort Lauderdale, FL</div>
           </div>
           <div>
             <div className="font-semibold mb-1">Quick Links</div>
             <ul className="space-y-1">
               <li><a className="hover:underline" href="https://conciergemens.com/" target="_blank" rel="noreferrer">Home</a></li>
-              <li><a className="hover:underline" href="https://conciergemens.com/#contact" target="_blank" rel="noreferrer">Book Consult</a></li>
+              <li><button onClick={openCalendly} className="hover:underline">Book Consult</button></li>
               <li><a className="hover:underline" href="https://doctorcoba.com/" target="_blank" rel="noreferrer">DoctorCoba.com</a></li>
             </ul>
           </div>
           <div>
             <div className="font-semibold mb-1">Privacy</div>
-            <p>Do not enter PHI in this MVP. For medical messaging and e‑sign, we will enable a HIPAA‑compliant backend.</p>
+            <p>Do not enter PHI in this MVP. For medical messaging and e-sign, we will enable a HIPAA-compliant backend.</p>
           </div>
         </div>
       </footer>
     </div>
   )
 }
+
