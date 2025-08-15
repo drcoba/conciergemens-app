@@ -382,9 +382,30 @@ function runQuiz(){
   </ul>
 </div>
           <div>
-            <div className="font-semibold mb-1">Privacy</div>
-            <p>Do not enter PHI in this MVP. For medical messaging and e-sign, we will enable a HIPAA-compliant backend.</p>
-          </div>
+  <div className="font-semibold mb-1">Legal</div>
+  <ul className="space-y-1">
+    <li>
+      <a
+        className="hover:underline"
+        href="https://conciergemens.com/privacy/"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Privacy Policy
+      </a>
+    </li>
+    <li>
+      <a
+        className="hover:underline"
+        href="https://conciergemens.com/terms/"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Terms of Use
+      </a>
+    </li>
+  </ul>
+</div>
         </div>
       </footer>
     </div>
