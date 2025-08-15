@@ -368,46 +368,52 @@ function runQuiz(){
 
       {/* Footer */}
       <footer className="border-t">
-        <div className="container py-10 text-sm text-slate-600 grid md:grid-cols-3 gap-6">
-          <div>
-            <div className="font-semibold">Concierge Men's Wellness</div>
-            <div>Evidence-based sexual wellness care for men.</div>
-            <div className="mt-2">(954) 323-8684 • Fort Lauderdale, FL</div>
-          </div>
-          <div>
-  <div className="font-semibold mb-1">Legal</div>
-  <ul className="space-y-1">
-    <li><a className="hover:underline" href="https://conciergemens.com/privacy/" target="_blank" rel="noreferrer">Privacy Policy</a></li>
-    <li><a className="hover:underline" href="https://conciergemens.com/terms/" target="_blank" rel="noreferrer">Terms of Use</a></li>
-  </ul>
-</div>
-          <div>
-  <div className="font-semibold mb-1">Legal</div>
-  <ul className="space-y-1">
-    <li>
-      <a
-        className="hover:underline"
-        href="https://conciergemens.com/privacy/"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Privacy Policy
-      </a>
-    </li>
-    <li>
-      <a
-        className="hover:underline"
-        href="https://conciergemens.com/terms/"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Terms of Use
-      </a>
-    </li>
-  </ul>
-</div>
-        </div>
-      </footer>
+  <div className="container py-10 text-sm text-slate-600 grid md:grid-cols-3 gap-6">
+    {/* Column 1 */}
+    <div>
+      <div className="font-semibold">Concierge Men's Wellness</div>
+      <div>Evidence-based sexual wellness care for men.</div>
+      <div className="mt-2">(954) 323-8684 • Fort Lauderdale, FL</div>
+    </div>
+
+    {/* Column 2 */}
+    <div>
+      <div className="font-semibold mb-1">Quick Links</div>
+      <ul className="space-y-1">
+        <li><a className="hover:underline" href="https://conciergemens.com/" target="_blank" rel="noreferrer">Home</a></li>
+        <li><button onClick={openCalendly} className="hover:underline">Book Consult</button></li>
+        <li><a className="hover:underline" href="https://doctorcoba.com/" target="_blank" rel="noreferrer">DoctorCoba.com</a></li>
+      </ul>
+    </div>
+
+    {/* Column 3 — LEGAL LINKS */}
+    <div>
+      <div className="font-semibold mb-1">Legal</div>
+      <ul className="space-y-1">
+        <li>
+          <a
+            className="hover:underline"
+            href="https://conciergemens.com/privacy/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Privacy Policy
+          </a>
+        </li>
+        <li>
+          <a
+            className="hover:underline"
+            href="https://conciergemens.com/terms/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Terms of Use
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
     </div>
   )
 }
