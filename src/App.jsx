@@ -375,13 +375,12 @@ function runQuiz(){
             <div className="mt-2">(954) 323-8684 • Fort Lauderdale, FL</div>
           </div>
           <div>
-            <div className="font-semibold mb-1">Quick Links</div>
-            <ul className="space-y-1">
-              <li><a className="hover:underline" href="https://conciergemens.com/" target="_blank" rel="noreferrer">Home</a></li>
-              <li><button onClick={openCalendly} className="hover:underline">Book Consult</button></li>
-              <li><a className="hover:underline" href="https://doctorcoba.com/" target="_blank" rel="noreferrer">DoctorCoba.com</a></li>
-            </ul>
-          </div>
+  <div className="font-semibold mb-1">Legal</div>
+  <ul className="space-y-1">
+    <li><a className="hover:underline" href="https://conciergemens.com/privacy/" target="_blank" rel="noreferrer">Privacy Policy</a></li>
+    <li><a className="hover:underline" href="https://conciergemens.com/terms/" target="_blank" rel="noreferrer">Terms of Use</a></li>
+  </ul>
+</div>
           <div>
             <div className="font-semibold mb-1">Privacy</div>
             <p>Do not enter PHI in this MVP. For medical messaging and e-sign, we will enable a HIPAA-compliant backend.</p>
