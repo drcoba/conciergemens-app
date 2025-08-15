@@ -93,6 +93,27 @@ export default function App() {
       } catch {}
     };
   }, []);
+// SEO: FAQPage schema for Google
+useEffect(() => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(({ q, a }) => ({
+      "@type": "Question",
+      "name": q,
+      "acceptedAnswer": { "@type": "Answer", "text": a }
+    }))
+  };
+
+  const s = document.createElement("script");
+  s.type = "application/ld+json";
+  s.text = JSON.stringify(schema);
+  document.head.appendChild(s);
+
+  return () => {
+    try { document.head.removeChild(s); } catch {}
+  };
+}, []);
 
   const openCalendly = () => {
     track('Consultation Opened');
