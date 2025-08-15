@@ -83,4 +83,329 @@ export default function App() {
       (quiz.meds || '').toLowerCase().includes('nitrate');
 
     if (hasFlag) {
+      setResult('Flagged for clinician review only (contraindication/complex history). Book a free consult.');
+      trackQuiz('flagged');
+      return;
+    }
 
+    if (age < 45) {
+      setResult('Consider fast-acting troches + lifestyle tune-up. Discuss PT-141 if psychological component suspected.');
+      trackQuiz('younger');
+      window.open(BREVO_FORM_URL, '_blank');
+    } else {
+      setResult('Start with low-dose intracavernosal protocol + optional PT-141. Titrate under clinician supervision.');
+      trackQuiz('older');
+      window.open(BREVO_FORM_URL, '_blank');
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-900 pb-24 md:pb-0">
+      {/* Top Bar */}
+      <div className="sticky top-0 z-40 bg-white/70 backdrop-blur border-b">
+        <div className="container py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-[var(--brand-teal)] text-white font-bold">CM</span>
+            <div className="leading-tight">
+              <div className="font-semibold">Concierge Men's Wellness</div>
+              <div className="text-xs text-slate-500">conciergemens.com</div>
+            </div>
+            <span className="badge ml-2">MVP</span>
+          </div>
+          <div className="hidden md:flex items-center gap-2">
+            <button
+              className="btn"
+              onClick={() =>
+                alert(
+                  'We combine fast-acting options (troches, ICI) with neuro-hormonal support (PT-141, oxytocin). Protocols are individualized and supervised by clinicians.'
+                )
+              }
+            >
+              <Shield className="w-4 h-4 mr-2" /> Why It Works
+            </button>
+            <button onClick={openCalendly} className="btn btn-primary">
+              <PhoneCall className="w-4 h-4 mr-2" /> Free Consultation
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Hero */}
+      <section className="container pt-10 pb-8">
+        <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+              Stronger, Longer, <span className="text-[var(--brand-teal)]">Confident</span>.
+            </h1>
+            <p className="mt-3 text-slate-600">
+              Evidence-based, prescription-only solutions for ED and performance. Private, fast, and tailored to your goals.
+            </p>
+            <div className="mt-5 flex gap-3 flex-wrap">
+              <button className="btn btn-primary" onClick={() => setQuizOpen(true)}>
+                <ClipboardList className="w-4 h-4 mr-2" /> 2-Minute Intake Quiz
+              </button>
+              <button onClick={openCalendly} className="btn">
+                <PhoneCall className="w-4 h-4 mr-2" /> Free Consultation
+              </button>
+            </div>
+          </div>
+          <div className="card p-6">
+            <div className="grid gap-3">
+              <div className="font-semibold">Treatments</div>
+              <ul className="space-y-3 text-sm">
+                <li className="p-3 rounded-xl border flex items-start gap-3">
+                  <FlaskConical className="w-5 h-5 mt-0.5" /> Troches & rapid-dissolve tablets: on-demand support with fast onset.
+                </li>
+                <li className="p-3 rounded-xl border flex items-start gap-3">
+                  <Sparkles className="w-5 h-5 mt-0.5" /> Intracavernosal injections: 10-minute onset, long duration, effective even post-prostatectomy or diabetes.
+                </li>
+                <li className="p-3 rounded-xl border flex items-start gap-3">
+                  <Sparkles className="w-5 h-5 mt-0.5" /> PT-141 (Bremelanotide): boosts desire and neural pathways of arousal.
+                </li>
+                <li className="p-3 rounded-xl border flex items-start gap-3">
+                  <Sparkles className="w-5 h-5 mt-0.5" /> Oxytocin: confidence, bonding, and partner connection support.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="container pb-16">
+        <div className="grid md:grid-cols-4 gap-4">
+          {features.map((f, i) => (
+            <div key={i} className="card p-4">
+              <div className="w-10 h-10 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center mb-2">{f.icon}</div>
+              <div className="font-semibold">{f.title}</div>
+              <div className="text-sm text-slate-600">{f.desc}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Quiz Modal */}
+      {quizOpen && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
+          <div
+            className="card p-6 max-w-lg w-full"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="quiz-title"
+            aria-describedby="quiz-desc"
+          >
+            <div id="quiz-title" className="font-semibold text-lg mb-1">
+              Quick Intake
+            </div>
+            <p id="quiz-desc" className="text-sm text-slate-600 mb-3">
+              Answer 2 required fields (*) to get a preliminary suggestion. This is for education only; not medical advice.
+            </p>
+
+            <div className="grid gap-3">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor="age" className="block text-xs text-slate-600 mb-1">
+                    Age *
+                  </label>
+                  <input
+                    id="age"
+                    type="number"
+                    inputMode="numeric"
+                    min="18"
+                    max="100"
+                    className="input"
+                    placeholder="e.g., 45"
+                    value={quiz.age}
+                    onChange={(e) => setQuiz({ ...quiz, age: e.target.value })}
+                    autoComplete="off"
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="goals" className="block text-xs text-slate-600 mb-1">
+                    Main goal *
+                  </label>
+                  <input
+                    id="goals"
+                    className="input"
+                    placeholder="e.g., firmness, duration"
+                    value={quiz.goals}
+                    onChange={(e) => setQuiz({ ...quiz, goals: e.target.value })}
+                    autoComplete="off"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="condition" className="block text-xs text-slate-600 mb-1">
+                  Relevant condition (optional)
+                </label>
+                <input
+                  id="condition"
+                  className="input"
+                  placeholder="e.g., diabetes, post-prostatectomy"
+                  value={quiz.condition}
+                  onChange={(e) => setQuiz({ ...quiz, condition: e.target.value })}
+                  autoComplete="off"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="meds" className="block text-xs text-slate-600 mb-1">
+                  Current meds (optional)
+                </label>
+                <input
+                  id="meds"
+                  className="input"
+                  placeholder="e.g., nitrates"
+                  value={quiz.meds}
+                  onChange={(e) => setQuiz({ ...quiz, meds: e.target.value })}
+                  autoComplete="off"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-xs text-slate-600 mb-1">
+                  Email (for results, optional)
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  className="input"
+                  placeholder="you@example.com"
+                  value={quiz.contact}
+                  onChange={(e) => setQuiz({ ...quiz, contact: e.target.value })}
+                  autoComplete="email"
+                />
+              </div>
+
+              <div className="flex gap-2">
+                <button className="btn btn-primary" onClick={runQuiz}>
+                  <Sparkles className="w-4 h-4 mr-2" /> Get Suggestion
+                </button>
+                <button className="btn" onClick={openCalendly}>
+                  <PhoneCall className="w-4 h-4 mr-2" /> Book Consult
+                </button>
+                <button className="ml-auto btn" onClick={() => setQuizOpen(false)}>
+                  Close
+                </button>
+                <button
+                  className="btn"
+                  onClick={() => {
+                    setQuiz({ age: '', condition: '', meds: '', goals: '', contact: '' });
+                    try {
+                      localStorage.removeItem('cmw_quiz_v1');
+                    } catch {}
+                    track('Quiz Cleared');
+                  }}
+                >
+                  Clear answers
+                </button>
+              </div>
+
+              {result && (
+                <div className="border rounded-xl p-3 text-sm text-slate-700" role="status" aria-live="polite">
+                  <div className="font-medium mb-2">Preliminary suggestion</div>
+                  <div>{result}</div>
+                  <div className="mt-3 flex gap-2">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        track('Email CTA Clicked');
+                        window.open(BREVO_FORM_URL, '_blank');
+                      }}
+                    >
+                      Get guidance by email
+                    </button>
+                    <button className="btn" onClick={openCalendly}>
+                      <PhoneCall className="w-4 h-4 mr-2" /> Book Consult
+                    </button>
+                  </div>
+                  <p className="mt-3 text-xs text-slate-500">
+                    Educational content only and not a substitute for professional medical advice, diagnosis, or treatment.
+                    If you think you’re experiencing a medical emergency, call your local emergency number.
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile sticky bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden" role="region" aria-label="Quick actions">
+        <div className="mx-auto max-w-6xl px-4 pb-4">
+          <div className="rounded-2xl shadow-lg border bg-white p-3 flex gap-2">
+            <button
+              className="btn btn-primary flex-1"
+              onClick={() => {
+                setQuizOpen(true);
+                track('Start Quiz (sticky)');
+              }}
+            >
+              <ClipboardList className="w-4 h-4 mr-2" /> Start Quiz
+            </button>
+            <button
+              className="btn flex-1"
+              onClick={() => {
+                track('Consultation Opened (sticky)');
+                openCalendly();
+              }}
+            >
+              <PhoneCall className="w-4 h-4 mr-2" /> Book Consult
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t">
+        <div className="container py-10 text-sm text-slate-600 grid md:grid-cols-3 gap-6">
+          <div>
+            <div className="font-semibold">Concierge Men's Wellness</div>
+            <div>Evidence-based sexual wellness care for men.</div>
+            <div className="mt-2">(954) 323-8684 • Fort Lauderdale, FL</div>
+          </div>
+
+          <div>
+            <div className="font-semibold mb-1">Quick Links</div>
+            <ul className="space-y-1">
+              <li>
+                <a className="hover:underline" href="https://conciergemens.com/" target="_blank" rel="noreferrer">
+                  Home
+                </a>
+              </li>
+              <li>
+                <button onClick={openCalendly} className="hover:underline">
+                  Book Consult
+                </button>
+              </li>
+              <li>
+                <a className="hover:underline" href="https://doctorcoba.com/" target="_blank" rel="noreferrer">
+                  DoctorCoba.com
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <div className="font-semibold mb-1">Legal</div>
+            <ul className="space-y-1">
+              <li>
+                <a className="hover:underline" href="https://conciergemens.com/privacy/" target="_blank" rel="noreferrer">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a className="hover:underline" href="https://conciergemens.com/terms/" target="_blank" rel="noreferrer">
+                  Terms of Use
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
