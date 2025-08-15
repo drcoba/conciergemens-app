@@ -25,6 +25,40 @@ const features = [
 // no-op tracking
 const track = () => {};
 const trackQuiz = (stage) => track('Quiz ' + stage);
+const faqs = [
+  {
+    q: "What problems do you help with?",
+    a: "Performance confidence, difficulty getting or maintaining erections, poor response to pills, and post-prostatectomy support. Care is individualized and clinician-supervised."
+  },
+  {
+    q: "Do I need a prescription?",
+    a: "Yes. All protocols are prescription-only and require evaluation by a licensed provider. Virtual or in-clinic options are available depending on your location and medical history."
+  },
+  {
+    q: "How quickly can treatments work?",
+    a: "Rapid-dissolve troches can have an on-demand effect. Injections are typically ~10 minutes to onset and are effective even when pills fail. Timing varies by patient—your clinician will guide dosing."
+  },
+  {
+    q: "Is this covered by insurance?",
+    a: "Most protocols are self-pay; many patients use HSA/FSA. We’ll provide transparent pricing during your consult."
+  },
+  {
+    q: "Is this private?",
+    a: "Yes. No PHI is stored in this MVP. For medical messaging and e-sign, we enable a HIPAA-compliant backend."
+  },
+  {
+    q: "Who is a good candidate?",
+    a: "Adults 18+ seeking performance support or ED care who can safely use the medications involved. Your provider will screen for contraindications such as nitrates."
+  },
+  {
+    q: "Where do visits happen?",
+    a: "Most consults are virtual. In-clinic visits are available where required for certain protocols."
+  },
+  {
+    q: "How do I get started?",
+    a: "Take the 2-minute intake quiz for a preliminary suggestion, then book a free consultation to review options with a clinician."
+  }
+];
 
 export default function App() {
   // ---- state ----
