@@ -179,6 +179,7 @@ useEffect(() => {
               <Shield className="w-4 h-4 mr-2" /> Why It Works
             </button>
             <button onClick={openCalendly} className="btn btn-primary">
+              <a href="#faq" className="btn">FAQ</a>
               <PhoneCall className="w-4 h-4 mr-2" /> Free Consultation
             </button>
           </div>
