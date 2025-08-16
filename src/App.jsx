@@ -168,21 +168,24 @@ useEffect(() => {
             <span className="badge ml-2">MVP</span>
           </div>
           <div className="hidden md:flex items-center gap-2">
-            <button
-              className="btn"
-              onClick={() =>
-                alert(
-                  'We combine fast-acting options (troches, ICI) with neuro-hormonal support (PT-141, oxytocin). Protocols are individualized and supervised by clinicians.'
-                )
-              }
-            >
-              <Shield className="w-4 h-4 mr-2" /> Why It Works
-            </button>
-            <button onClick={openCalendly} className="btn btn-primary">
-              <a href="#faq" className="btn">FAQ</a>
-              <PhoneCall className="w-4 h-4 mr-2" /> Free Consultation
-            </button>
-          </div>
+  <button
+    className="btn"
+    onClick={() =>
+      alert(
+        'We combine fast-acting options (troches, ICI) with neuro-hormonal support (PT-141, oxytocin). Protocols are individualized and supervised by clinicians.'
+      )
+    }
+  >
+    <Shield className="w-4 h-4 mr-2" /> Why It Works
+  </button>
+
+  <a href="#faq" className="btn">FAQ</a>
+
+  <button onClick={openCalendly} className="btn btn-primary">
+    <PhoneCall className="w-4 h-4 mr-2" /> Free Consultation
+  </button>
+</div>
+
         </div>
       </div>
 
