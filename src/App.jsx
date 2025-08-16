@@ -238,6 +238,34 @@ useEffect(() => {
           ))}
         </div>
       </section>
+{/* FAQ */}
+<section id="faq" className="container pb-16">
+  <div className="mb-6">
+    <h2 className="text-2xl font-semibold">Frequently Asked Questions</h2>
+    <p className="text-slate-600">Short answers. Your clinician will personalize your protocol.</p>
+  </div>
+
+  <div className="grid md:grid-cols-2 gap-4">
+    {faqs.map((item, i) => (
+      <details key={i} className="card p-4 group open:shadow-sm">
+        <summary className="cursor-pointer select-none font-medium flex items-start justify-between">
+          <span className="pr-6">{item.q}</span>
+          <span className="ml-2 text-slate-400 group-open:rotate-180 transition-transform">⌄</span>
+        </summary>
+        <div className="mt-2 text-slate-700 text-sm">{item.a}</div>
+      </details>
+    ))}
+  </div>
+
+  <div className="mt-6 flex gap-2">
+    <button className="btn btn-primary" onClick={() => setQuizOpen(true)}>
+      <ClipboardList className="w-4 h-4 mr-2" /> Start the 2-minute quiz
+    </button>
+    <button className="btn" onClick={openCalendly}>
+      <PhoneCall className="w-4 h-4 mr-2" /> Book a free consult
+    </button>
+  </div>
+</section>
 
       {/* Quiz Modal */}
       {quizOpen && (
