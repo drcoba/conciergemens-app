@@ -87,6 +87,34 @@ export default function App() {
     s.src = 'https://assets.calendly.com/assets/external/widget.js';
     s.async = true;
     document.body.appendChild(s);
+    // --- Google Ads conversion on Calendly booking ---
+useEffect(() => {
+  // Avoid adding duplicate listeners during hot reloads
+  if (window.__cmwCalendlyHookAdded) return;
+  window.__cmwCalendlyHookAdded = true;
+
+  const onMessage = (e) => {
+    // Calendly sends postMessage events from *.calendly.com
+    const fromCalendly = typeof e.origin === 'string' && e.origin.includes('calendly.com');
+    const scheduled = e?.data?.event === 'calendly.event_scheduled';
+
+    if (fromCalendly && scheduled) {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'conversion', {
+          send_to: 'AW-1031145822', // <-- your full send_to here
+          // If your conversion action expects a value/currency, uncomment:
+          // value: 0.00,
+          // currency: 'USD',
+        });
+        console.log('[Ads] Conversion fired: calendly.event_scheduled');
+      }
+    }
+  };
+
+  window.addEventListener('message', onMessage);
+  return () => window.removeEventListener('message', onMessage);
+}, []);
+
     return () => {
       try {
         document.body.removeChild(s);
